@@ -1,0 +1,13 @@
+<p>Euler Problem 2</p>
+<div>
+  <div><div ng-Repeat="explanationLine in explanation">{{explanationLine}}<p></div></div>
+  <p>
+  <div ng-Bind="challenge"></div>
+  <p>
+  <div>
+    <form ng-Submit="calculateAnswer()">
+      <div><span>Input: </span><span><input ng-Model="upperNumber" ng-Change="calculateAnswer()"></span></div>
+    </form>
+  </div>
+  <div>Answer: <span ng-Bind="answer"></span></div>
+</div>
