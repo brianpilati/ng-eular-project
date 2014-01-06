@@ -6,16 +6,15 @@
   <link rel="stylesheet" href="css/bpEuler.css"/>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/problem1">Euler Problem 1</a></li>
-    <li><a href="#/problem2">Euler Problem 2</a></li>
-  </ul>
+  <div ng-Controller="bpPages">
+    <ul class="menu">
+      <li ng-repeat="page in pages"><a href="#/{{page.href}}">{{page.pageName}}</a></li>
+    </ul>
+  </div>
 
   <div ng-view></div>
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
-  -->
+  <script src="https://googledrive.com/host/0BzV0qQebBQxqaDJKajRqTmZQZVk"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-route.js"></script>
   <script src="js/app.js"></script>

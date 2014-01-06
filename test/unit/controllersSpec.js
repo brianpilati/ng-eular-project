@@ -3,7 +3,7 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function(){
-  beforeEach(module('bpEuler.controllers'));
+  beforeEach(module('bpEuler.controllers'), ['primeNumbers']);
 
   var scope, ctrl;
   beforeEach(inject(function($controller, $rootScope) {
@@ -16,7 +16,7 @@ describe('controllers', function(){
   });
 
   it('should answer "problem 1" with 233168 as the answer', function() {
-    scope.upperNumber = 1000;
+    scope.inputNumber = 1000;
     scope.calculateAnswer();
     expect(scope.answer).toBe(233168);
   });
@@ -38,7 +38,7 @@ describe('controllers', function(){
   });
 
   it('should answer "problem 2" with 44 as the answer', function() {
-    scope.upperNumber = 100;
+    scope.inputNumber = 100;
     scope.calculateAnswer();
     expect(scope.answer).toBe(44);
     expect(scope.allArray).toEqual([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
@@ -46,8 +46,80 @@ describe('controllers', function(){
   });
 
   it('should answer "problem 2" with 44 as the answer', function() {
-    scope.upperNumber = 4000000;
+    scope.inputNumber = 4000000;
     scope.calculateAnswer();
     expect(scope.answer).toBe(4613732);
+  });
+});
+
+describe('controllers', function(){
+  beforeEach(module('bpEuler.controllers'));
+
+  var scope, ctrl;
+  beforeEach(inject(function($controller, $rootScope, primeNumber) {
+    scope = $rootScope.$new();
+    ctrl = $controller('bpProblem3', { $scope: scope, 'primeNumber': primeNumber});
+  }));
+
+  it('should answer "problem 3" with 13195 as the answer', function() {
+    expect(scope.inputNumber).toBe(13195);
+    expect(scope._knownFactors).toEqual([5, 7, 13, 29]);
+    expect(scope.answer).toBe(29);
+  });
+
+  it('should answer "problem 3" with 1 as the answer', function() {
+    scope.inputNumber = 1;
+    scope.calculateAnswer();
+    expect(scope.inputNumber).toBe(1);
+    expect(scope._knownFactors).toEqual([1]);
+    expect(scope.answer).toBe(1);
+  });
+
+  it('should answer "problem 3" with 2 as the answer', function() {
+    scope.inputNumber = 2;
+    scope.calculateAnswer();
+    expect(scope.inputNumber).toBe(2);
+    expect(scope._knownFactors).toEqual([2]);
+    expect(scope.answer).toBe(2);
+  });
+
+  it('should answer "problem 3" with 8 as the answer', function() {
+    scope.inputNumber = 8;
+    scope.calculateAnswer();
+    expect(scope.inputNumber).toBe(8);
+    expect(scope._knownFactors).toEqual([2, 2, 2]);
+    expect(scope.answer).toBe(2);
+  });
+
+
+  it('should answer "problem 3" with 21 as the answer', function() {
+    scope.inputNumber = 21;
+    scope.calculateAnswer();
+    expect(scope.inputNumber).toBe(21);
+    expect(scope._knownFactors).toEqual([3, 7]);
+    expect(scope.answer).toBe(7);
+  });
+
+  it('should answer "problem 3" with 600851475143 as the answer', function() {
+    scope.inputNumber = 600851475143;
+    scope.calculateAnswer();
+    expect(scope.inputNumber).toBe(600851475143);
+    expect(scope._knownFactors).toEqual([71, 839, 1471, 6857]);
+    expect(scope.answer).toBe(6857);
+  });
+
+});
+
+describe('controllers', function(){
+  beforeEach(module('bpEuler.controllers'));
+
+  var scope, ctrl;
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();
+    ctrl = $controller('bpProblemBlank', { $scope: scope });
+  }));
+
+  it('should answer "problem Blank" with 10 as the answer', function() {
+    expect(scope.answer).toBe(20);
   });
 });

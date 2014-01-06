@@ -1,13 +1,23 @@
 'use strict';
 
 /* Controllers */
-
-angular.module('bpEuler.controllers', []).
-  controller('bpProblem1', ['$scope', function($scope) {
-
+angular.module('bpEuler.controllers', ['primeNumber']).
+  controller('bpPages', ['$scope', function($scope) {
+    var totalPages = 3;
+    $scope.pages = [];
+    for (var pageNumber=1; pageNumber <= totalPages; pageNumber++) {
+      $scope.pages.push(
+        {  
+          'href' : 'problem' + pageNumber,
+          'pageName' : 'Euler Problem ' + pageNumber 
+        }
+      );
+    }
+  }])
+  .controller('bpProblem1', ['$scope', function($scope) {
     $scope.calculateAnswer = function () {
       var sumNumber=0;
-      for (var naturalNumber=1; naturalNumber < $scope.upperNumber; naturalNumber++) {
+      for (var naturalNumber=1; naturalNumber < $scope.inputNumber; naturalNumber++) {
         sumNumber += (naturalNumber % 3 == 0 || naturalNumber % 5 == 0 ? naturalNumber : 0);
       }
       $scope.answer = sumNumber;
@@ -16,11 +26,10 @@ angular.module('bpEuler.controllers', []).
     $scope.problem = "1";
     $scope.explanation = ["If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23."];
     $scope.challenge = "Find the sum of all the multiples of 3 or 5 below 1000.";
-    $scope.upperNumber = 10;
+    $scope.inputNumber = 10;
     $scope.calculateAnswer();
     $scope.expectedAnswer = 233168;
   }])
-
   .controller('bpProblem2', ['$scope', function($scope) {
 
     $scope.calculateAnswer = function () {
@@ -33,7 +42,7 @@ angular.module('bpEuler.controllers', []).
       var allArray = [];
 
       term = nTerm + nTermPlusnTerm;
-      while (term < $scope.upperNumber) {
+      while (term < $scope.inputNumber) {
         if (term % 2 == 0) {
           sumOfEvens += term;
           newArray.push(term);
@@ -55,7 +64,78 @@ angular.module('bpEuler.controllers', []).
       "1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ..."
     ];
     $scope.challenge = "By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.";
-    $scope.upperNumber = 10;
+    $scope.inputNumber = 10;
     $scope.calculateAnswer();
     $scope.expectedAnswer = 4613732;
-  }]);
+  }])
+  .controller('bpProblem3', ['$scope', 'primeNumber', function($scope, primeNumber) {
+    $scope._findBiggestPrimeFactor = function() {
+      var localSortedKnownFactors = $scope._knownFactors.sort(function(a,b){return a-b});
+      return localSortedKnownFactors[localSortedKnownFactors.length-1];
+    }
+
+    $scope.calculateAnswer = function () {
+      $scope._knownFactors = [];
+      var originalNumber = $scope.inputNumber, startingNumber = $scope.inputNumber; 
+      var maxSquareRoot = Math.floor(Math.sqrt(startingNumber));
+      var quotient = 1;
+      var nextPrimeFactor = 2;
+      var continueFactoring = true;
+
+      if ($scope.inputNumber == 1) {
+        $scope._knownFactors.push(1);
+        continueFactoring = false;
+      }
+
+      while (continueFactoring) {
+        var continueDivision = true;
+        while (continueDivision) {
+          if (startingNumber % nextPrimeFactor == 0) {
+            startingNumber = startingNumber / nextPrimeFactor;
+            $scope._knownFactors.push(nextPrimeFactor);
+            quotient *= nextPrimeFactor;
+            if (quotient >= originalNumber) {
+              continueFactoring = false;
+              break;
+            }
+          } else {
+            continueDivision = false;
+          }
+        }
+        nextPrimeFactor += (nextPrimeFactor <= 2 ? 1 : 2);
+        var primeNumberContinue = true;
+        while (primeNumberContinue && nextPrimeFactor < maxSquareRoot) {
+          if (primeNumber.isPrimeNumber(nextPrimeFactor) ) {
+            primeNumberContinue = false;
+          } else {
+            nextPrimeFactor += 2;
+          }
+        } 
+      }
+      $scope.answer = $scope._findBiggestPrimeFactor();
+    }
+
+    $scope.problem = "3";
+    $scope.explanation = [
+      "The prime factors of 13195 are 5, 7, 13 and 29."
+    ];
+    $scope.challenge = "What is the largest prime factor of the number 600851475143?";
+    $scope.inputNumber = 13195;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 600851475143;
+  }])
+  .controller('bpProblemBlank', ['$scope', function($scope) {
+
+    $scope.calculateAnswer = function () {
+      $scope.answer = $scope.inputNumber * 2;
+    }
+
+    $scope.problem = "";
+    $scope.explanation = [
+    ];
+    $scope.challenge = "";
+    $scope.inputNumber = 10;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = undefined;
+  }])
+  ;
