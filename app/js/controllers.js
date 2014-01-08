@@ -3,7 +3,7 @@
 /* Controllers */
 angular.module('bpEuler.controllers', ['primeNumber']).
   controller('bpPages', ['$scope', function($scope) {
-    var totalPages = 3;
+    var totalPages = 5;
     $scope.pages = [];
     for (var pageNumber=1; pageNumber <= totalPages; pageNumber++) {
       $scope.pages.push(
@@ -17,10 +17,13 @@ angular.module('bpEuler.controllers', ['primeNumber']).
   .controller('bpProblem1', ['$scope', function($scope) {
     $scope.calculateAnswer = function () {
       var sumNumber=0;
+      var counter = 0;
       for (var naturalNumber=1; naturalNumber < $scope.inputNumber; naturalNumber++) {
+        counter++;
         sumNumber += (naturalNumber % 3 == 0 || naturalNumber % 5 == 0 ? naturalNumber : 0);
       }
       $scope.answer = sumNumber;
+      $scope.counter = counter;
     }
 
     $scope.problem = "1";
@@ -40,9 +43,11 @@ angular.module('bpEuler.controllers', ['primeNumber']).
       var nTermPlusnTerm = 1;
       var newArray = []; 
       var allArray = [];
+      var counter = 0;
 
       term = nTerm + nTermPlusnTerm;
       while (term < $scope.inputNumber) {
+        counter++;
         if (term % 2 == 0) {
           sumOfEvens += term;
           newArray.push(term);
@@ -56,6 +61,7 @@ angular.module('bpEuler.controllers', ['primeNumber']).
       $scope.answer = sumOfEvens
       $scope.newArray = newArray;
       $scope.allArray = allArray;
+      $scope.counter = counter;
     }
 
     $scope.problem = "2";
@@ -76,6 +82,7 @@ angular.module('bpEuler.controllers', ['primeNumber']).
 
     $scope.calculateAnswer = function () {
       $scope._knownFactors = [];
+      var counter = 0;
       var originalNumber = $scope.inputNumber, startingNumber = $scope.inputNumber; 
       var maxSquareRoot = Math.floor(Math.sqrt(startingNumber));
       var quotient = 1;
@@ -83,6 +90,7 @@ angular.module('bpEuler.controllers', ['primeNumber']).
       var continueFactoring = true;
 
       if ($scope.inputNumber == 1) {
+        counter++;
         $scope._knownFactors.push(1);
         continueFactoring = false;
       }
@@ -90,6 +98,7 @@ angular.module('bpEuler.controllers', ['primeNumber']).
       while (continueFactoring) {
         var continueDivision = true;
         while (continueDivision) {
+          counter++;
           if (startingNumber % nextPrimeFactor == 0) {
             startingNumber = startingNumber / nextPrimeFactor;
             $scope._knownFactors.push(nextPrimeFactor);
@@ -105,6 +114,7 @@ angular.module('bpEuler.controllers', ['primeNumber']).
         nextPrimeFactor += (nextPrimeFactor <= 2 ? 1 : 2);
         var primeNumberContinue = true;
         while (primeNumberContinue && nextPrimeFactor < maxSquareRoot) {
+          counter++;
           if (primeNumber.isPrimeNumber(nextPrimeFactor) ) {
             primeNumberContinue = false;
           } else {
@@ -113,6 +123,7 @@ angular.module('bpEuler.controllers', ['primeNumber']).
         } 
       }
       $scope.answer = $scope._findBiggestPrimeFactor();
+      $scope.counter = counter;
     }
 
     $scope.problem = "3";
@@ -122,12 +133,78 @@ angular.module('bpEuler.controllers', ['primeNumber']).
     $scope.challenge = "What is the largest prime factor of the number 600851475143?";
     $scope.inputNumber = 13195;
     $scope.calculateAnswer();
-    $scope.expectedAnswer = 600851475143;
+    $scope.expectedAnswer = 6857;
   }])
-  .controller('bpProblemBlank', ['$scope', function($scope) {
+  .controller('bpProblem4', ['$scope', function($scope) {
 
     $scope.calculateAnswer = function () {
+      var counter = 0;
+      var biggestPalindrome = 0, firstNumber = 0, secondNumber = 0;
+      var quotient = 1;
+      for (var outerNumber=$scope.inputNumber; outerNumber>0; outerNumber--) {
+        for (var innerNumber=$scope.inputNumber; innerNumber>0; innerNumber--) {
+          counter++;
+          quotient = outerNumber * innerNumber;
+          var reversedQuotient = String(quotient).split("").reverse().join("");
+          if (quotient == reversedQuotient && quotient >= biggestPalindrome) {
+            biggestPalindrome = quotient;
+            firstNumber = outerNumber;
+            secondNumber = innerNumber;
+            if (quotient < biggestPalindrome) {
+              break;
+            }
+          }
+        }
+      }
+      $scope.answer = biggestPalindrome;
+      $scope.counter = counter;
+      $scope.outerNumber = firstNumber;
+      $scope.innerNumber = secondNumber;
+    }
+
+    $scope.problem = "4";
+    $scope.explanation = [
+      "A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99."
+    ];
+    $scope.challenge = "Find the largest palindrome made from the product of two 3-digit numbers.";
+    $scope.inputNumber = 99;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 906609;
+  }])
+  .controller('bpProblem5', ['$scope', 'primeNumber', function($scope, primeNumber) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
+      var quotient = 1;
+      for (var startingNumber=2; startingNumber <= $scope.inputNumber; startingNumber++) {
+        counter++;
+        if (primeNumber.isPrimeNumber(startingNumber) ) {
+          var powerNumber = 1;
+          while (Math.pow(startingNumber, powerNumber) < $scope.inputNumber) {
+            counter++;
+            quotient *= startingNumber;
+            powerNumber += 1;
+          }
+        }
+      }
+      $scope.answer = quotient;
+      $scope.counter = counter;
+    }
+
+    $scope.problem = "5";
+    $scope.explanation = [
+      "2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder."
+    ];
+    $scope.challenge = "What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?";
+    $scope.inputNumber = 10;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 232792560;
+
+  }])
+  .controller('bpProblemBlank', ['$scope', function($scope) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
       $scope.answer = $scope.inputNumber * 2;
+      $scope.counter = counter;
     }
 
     $scope.problem = "";
@@ -137,5 +214,6 @@ angular.module('bpEuler.controllers', ['primeNumber']).
     $scope.inputNumber = 10;
     $scope.calculateAnswer();
     $scope.expectedAnswer = undefined;
+
   }])
   ;
