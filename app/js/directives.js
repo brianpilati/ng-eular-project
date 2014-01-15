@@ -13,7 +13,7 @@ angular.module('bpEuler.directives', []).
     return {
       require: 'ngModel',
       link: function(scope, elm, attrs) {
-        scope.$watch(attrs.ngModel, function (v) {
+        scope.$watch('answer', function (v) {
           if (scope.expectedAnswer == scope.answer) {
             scope.validated = "Bingo";
             scope.answered = true;
@@ -21,6 +21,11 @@ angular.module('bpEuler.directives', []).
             scope.validated = "";
             scope.answered = false;
           } 
+          scope.timer = moment.utc().diff(scope.startTime) / 1000;
+        });
+
+        scope.$watch('inputNumber', function (v) {
+          scope.startTime = new moment().toDate();
         });
       }
     };
