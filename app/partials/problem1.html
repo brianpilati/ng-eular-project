@@ -1,8 +1,12 @@
 <p>Euler Problem {{problem}}</p>
 <div>
-  <div><div ng-Repeat="explanationLine in explanation">{{explanationLine}}<p></div></div>
+  <div>
+    <blockquote>
+      <div ng-Repeat="explanationLine in explanation">{{explanationLine}}<p></div>
+    </blockquote>
+  </div>
   <p>
-  <div ng-Bind="challenge"></div>
+  <div ng-bind-html="challenge"></div>
   <p>
   <div>
     <form ng-Submit="calculateAnswer()">

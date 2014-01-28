@@ -166,6 +166,107 @@ describe('controllers', function(){
   var scope, ctrl;
   beforeEach(inject(function($controller, $rootScope) {
     scope = $rootScope.$new();
+    ctrl = $controller('bpProblem6', { $scope: scope });
+  }));
+
+  it('should answer "problem 6" with 10 as the answer', function() {
+    expect(scope.sumOfSquares).toBe(385);
+    expect(scope.squareOfSums).toBe(3025);
+    expect(scope.answer).toBe(2640);
+    expect(scope.counter).toBe(11);
+  });
+
+  it('should answer "problem 6" with 10 as the answer', function() {
+    scope.inputNumber = 100;
+    scope.calculateAnswer();
+    expect(scope.sumOfSquares).toBe(338350);
+    expect(scope.squareOfSums).toBe(25502500);
+    expect(scope.answer).toBe(25164150);
+    expect(scope.counter).toBe(101);
+  });
+});
+
+describe('controllers', function(){
+  beforeEach(module('bpEuler.controllers'));
+
+  var scope, ctrl;
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();
+    ctrl = $controller('bpProblem7', { $scope: scope });
+  }));
+
+  it('should answer "problem 7" with 6 as the answer', function() {
+    expect(scope.answer).toBe(13);
+    expect(scope.counter).toBe(8);
+  });
+
+  /*it('should answer "problem 8" with 10 as the answer', function() {
+    scope.inputNumber = 10001;
+    scope.calculateAnswer();
+    expect(scope.answer).toBe(104743);
+    expect(scope.counter).toBe(52373);
+  });
+  */
+
+  it('should answer "problem 8" with 10 as the answer', function() {
+    scope.inputNumber = 1000;
+    scope.calculateAnswer();
+    expect(scope.answer).toBe(7919);
+    expect(scope.counter).toBe(3961);
+  });
+});
+
+describe('controllers', function(){
+  beforeEach(module('bpEuler.controllers'));
+
+  var scope, ctrl;
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();
+    ctrl = $controller('bpProblem8', { $scope: scope });
+  }));
+
+  it('should answer "problem 8" with 60 as the answer', function() {
+    expect(scope.answer).toBe(scope.expectedAnswer);
+    expect(scope.counter).toBe(13);
+  });
+});
+
+describe('controllers', function(){
+  beforeEach(module('bpEuler.controllers'));
+
+  var scope, ctrl;
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();
+    ctrl = $controller('bpProblem9', { $scope: scope });
+  }));
+
+  it('should answer "problem 9" with a as 3 and b as 4 as the answer', function() {
+    expect(scope.aNumber).toBe(3);
+    expect(scope.bNumber).toBe(4);
+    expect(scope.cNumber).toBe(5);
+    expect(scope.sumAnswer).toBe(12);
+    expect(scope.answer).toBe(scope.expectedAnswer);
+  });
+
+  it('should answer "problem 9" with a as variable and b as variable as the answer', function() {
+    scope.inputNumber = 1000; 
+    scope.calculateAnswer();
+    var pythagorean = 430;
+
+    expect(scope.aNumber).toBe(200);
+    expect(scope.bNumber).toBe(375);
+    expect(scope.cNumber).toBe(425);
+    expect(scope.sumAnswer).toBe(1000);
+    expect(scope.answer).toBe(31875000);
+  });
+});
+
+describe('controllers', function(){
+  beforeEach(module('bpEuler.controllers'));
+
+  var scope, ctrl;
+  beforeEach(inject(function($controller, $rootScope) {
+    scope = $rootScope.$new();
     ctrl = $controller('bpProblemBlank', { $scope: scope });
   }));
 

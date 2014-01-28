@@ -1,9 +1,9 @@
 'use strict';
 
 /* Controllers */
-angular.module('bpEuler.controllers', ['primeNumber']).
-  controller('bpPages', ['$scope', function($scope) {
-    var totalPages = 5;
+angular.module('bpEuler.controllers', ['primeNumber', 'ngSanitize']).
+  controller('bpMenu', ['$scope', function($scope) {
+    var totalPages = 9;
     $scope.pages = [];
     for (var pageNumber=1; pageNumber <= totalPages; pageNumber++) {
       $scope.pages.push(
@@ -200,6 +200,163 @@ angular.module('bpEuler.controllers', ['primeNumber']).
     $scope.expectedAnswer = 232792560;
 
   }])
+  .controller('bpProblem6', ['$scope', function($scope) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
+      $scope.sumOfSquares = 0;
+      $scope.squareOfSums = 0;
+      for (counter; counter <= $scope.inputNumber; counter++) {
+        $scope.sumOfSquares += Math.pow(counter, 2);
+        $scope.squareOfSums += counter;
+      }
+      $scope.squareOfSums = Math.pow($scope.squareOfSums, 2);
+
+      $scope.answer = $scope.squareOfSums - $scope.sumOfSquares;
+      $scope.counter = counter;
+    }
+
+    $scope.problem = "6";
+    $scope.explanation = [
+      "The sum of the squares of the first ten natural numbers is,",
+      "1^2 + 2^2 + ... + 10^2 = 385",
+      "The square of the sum of the first ten natural numbers is,",
+      "(1 + 2 + ... + 10)^2 = 55^2 = 3025",
+      "Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.",
+    ];
+    $scope.challenge = "Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.";
+    $scope.inputNumber = 10;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 2640;
+
+  }])
+  .controller('bpProblem7', ['$scope', 'primeNumber', function($scope, primeNumber) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
+      var nextPrime = 1;
+      var primeNumbers = []
+      var stoppingNumber = $scope.inputNumber;
+      while (primeNumbers.length <= stoppingNumber) {
+        if (primeNumber.isPrimeNumber(nextPrime) ) {
+          primeNumbers.push(nextPrime);
+        }
+        nextPrime += (nextPrime < 3 ? 1 : 2);
+        counter++;
+      }
+
+      $scope.answer = primeNumbers[$scope.inputNumber];
+      $scope.counter = counter;
+    }
+
+    $scope.problem = "7";
+    $scope.explanation = [
+      "By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13."
+    ];
+    $scope.challenge = "What is the 10,001st prime number? (This is really slow on Firefox and will cause the browser to freeze)";
+
+    $scope.inputNumber = 6;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 13;
+
+  }])
+  .controller('bpProblem8', ['$scope', '$sce', function($scope, $sce) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
+      var inputNumber = String($scope.inputNumber);
+      var biggestQuotient = 1;
+      var currentFive = [];
+      for (var index=0; index<inputNumber.length; index++) {
+        if (currentFive.length > 4) {
+          currentFive.shift();
+        }
+        currentFive.push(inputNumber[index]);
+
+        var quotient = 1;
+        for(var number in currentFive) {
+          quotient *= currentFive[number];
+        }
+        if (quotient > biggestQuotient) {
+          biggestQuotient = quotient;
+        }
+        counter++;
+      }
+
+      $scope.answer = biggestQuotient;
+      $scope.counter = counter;
+    }
+
+    $scope.problem = "8";
+    $scope.explanation = [
+    ];
+    $scope.challenge = $sce.trustAsHtml("Find the greatest product of five consecutive digits in the 1000-digit number." +
+      "<blockquote>73167176531330624919225119674426574742355349194934" +
+      "<br>96983520312774506326239578318016984801869478851843" +
+      "<br>85861560789112949495459501737958331952853208805511" +
+      "<br>12540698747158523863050715693290963295227443043557" +
+      "<br>66896648950445244523161731856403098711121722383113" +
+      "<br>62229893423380308135336276614282806444486645238749" +
+      "<br>30358907296290491560440772390713810515859307960866" +
+      "<br>70172427121883998797908792274921901699720888093776" +
+      "<br>65727333001053367881220235421809751254540594752243" +
+      "<br>52584907711670556013604839586446706324415722155397" +
+      "<br>53697817977846174064955149290862569321978468622482" +
+      "<br>83972241375657056057490261407972968652414535100474" +
+      "<br>82166370484403199890008895243450658541227588666881" +
+      "<br>16427171479924442928230863465674813919123162824586" +
+      "<br>17866458359124566529476545682848912883142607690042" +
+      "<br>24219022671055626321111109370544217506941658960408" +
+      "<br>07198403850962455444362981230987879927244284909188" +
+      "<br>84580156166097919133875499200524063689912560717606" +
+      "<br>05886116467109405077541002256983155200055935729725" +
+      "<br>71636269561882670428252483600823257530420752963450</blockquote>");
+
+    $scope.inputNumber = 1324123450123;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 120;
+
+  }])
+
+  .controller('bpProblem9', ['$scope', function($scope) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
+      var outerBreak = false;
+      var bIndexUpper = $scope.inputNumber;
+      var aIndexUpper = bIndexUpper-1;
+      for(var aIndex=1; aIndex<aIndexUpper; aIndex++) {
+        for(var bIndex=1; bIndex<bIndexUpper; bIndex++) {
+          $scope.cNumber = Math.pow(Math.pow(aIndex,2) + Math.pow(bIndex,2), .5);
+          $scope.sumAnswer = $scope.cNumber + aIndex + bIndex;
+          if ($scope.sumAnswer == $scope.inputNumber) {
+            $scope.aNumber = aIndex;
+            $scope.bNumber = bIndex;
+            $scope.answer = $scope.cNumber * aIndex * bIndex;
+            outerBreak = true;
+            break;
+          }
+          $scope.counter = counter;
+        }
+
+        if (outerBreak) {
+          break;
+        }
+      }
+    }
+
+    $scope.problem = "9";
+    $scope.explanation = [
+      "A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,",
+      "a^2 + b^2 = c^2",
+      "For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.",
+      "There exists exactly one Pythagorean triplet for which a + b + c = 1000.",
+    ];
+
+    $scope.challenge = "Find the product abc.";
+    $scope.inputNumber = 12;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = 60;
+
+  }])
+
+
   .controller('bpProblemBlank', ['$scope', function($scope) {
     $scope.calculateAnswer = function () {
       var counter = 0;

@@ -4,6 +4,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('bpEuler', [
   'ngRoute',
+  'ngSanitize',
   'bpEuler.filters',
   'bpEuler.services',
   'bpEuler.directives',
@@ -16,5 +17,9 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/problem3', {templateUrl: 'partials/problem1.html', controller: 'bpProblem3'});
   $routeProvider.when('/problem4', {templateUrl: 'partials/problem1.html', controller: 'bpProblem4'});
   $routeProvider.when('/problem5', {templateUrl: 'partials/problem1.html', controller: 'bpProblem5'});
+  $routeProvider.when('/problem6', {templateUrl: 'partials/problem1.html', controller: 'bpProblem6'});
+  $routeProvider.when('/problem7', {templateUrl: 'partials/problem1.html', controller: 'bpProblem7'});
+  $routeProvider.when('/problem8', {templateUrl: 'partials/problem1.html', controller: 'bpProblem8'});
+  $routeProvider.when('/problem9', {templateUrl: 'partials/problem1.html', controller: 'bpProblem9'});
   $routeProvider.otherwise({redirectTo: '/problem1'});
 }]);
