@@ -9,10 +9,7 @@ TODO
 =============
 Problem #10
 
-I would also like to add a stop watch using a directive.
-
 I am working on an improved menu using directives
-
 
 Unit Tests
 ==========

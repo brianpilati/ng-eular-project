@@ -1,20 +1,30 @@
-<p>Euler Problem {{problem}}</p>
-<div>
+<div id="eulerCanvas">
+  <span class="bold font24">Euler Problem {{problem}}</span>
   <div>
-    <blockquote>
-      <div ng-Repeat="explanationLine in explanation">{{explanationLine}}<p></div>
-    </blockquote>
+    <div>
+      <blockquote>
+        <span class="bold font14">Did you know?</span>
+        <p>
+        <div ng-Repeat="explanationLine in explanation">{{explanationLine}}<p></div>
+      </blockquote>
+    </div>
+    <p>
+    <div>
+      <blockquote>
+        <span class="bold font14">Challenge:</span>
+        <p>
+        <div ng-bind-html="challenge"></div>
+      </blockquote>
+    </div>
+    <div id="inputForm">
+      <div id="inputNumber">
+        <form ng-Submit="calculateAnswer()">
+          <div><span>New number: </span><span><input ng-Model="inputNumber" ng-Change="calculateAnswer()"></span></div>
+        </form>
+      </div>
+      <div id="answer">When the input number is <bp-input-number></bp-input-number> then the answer is: <span ng-Bind="answer"></span></div>
+    </div>
+    <div><span bp-problem-solved>Correct: </span><span ng-Class="{correct: answered, bold: answered}" ng-Bind="validated"></span></div>
+    <div><span>Counter Effeciency: </span><span ng-Bind="counter"></span></div>
   </div>
-  <p>
-  <div ng-bind-html="challenge"></div>
-  <p>
-  <div>
-    <form ng-Submit="calculateAnswer()">
-      <div><span>Input: </span><span><input bp-problem-solved ng-Model="inputNumber" ng-Change="calculateAnswer()"></span></div>
-    </form>
-  </div>
-  <div>Answer: <span ng-Bind="answer"></span></div>
-  <div><span>Correct: </span><span ng-Class="{correct: answered}" ng-Bind="validated"></span></div>
-  <div><span>Counter Effeciency: </span><span ng-Bind="counter"></span></div>
-  <div><span>Timer: </span><span ng-Bind="timer"></span> milliseconds</div>
 </div>

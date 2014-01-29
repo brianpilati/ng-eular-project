@@ -54,9 +54,20 @@ angular.module('bpEuler.directives', []).
       }
     }
   })
+  .directive('bpInputNumber', function() {
+    return {
+      restrict: "E",
+      replace: true,
+      template: "<span class='bold'></span>",
+      link: function(scope, elm, attrs) {
+        scope.$watch('inputNumber', function (v) {
+          elm.html(scope.inputNumber);
+        });
+      }
+    };
+  })
   .directive('bpProblemSolved', function() {
     return {
-      require: 'ngModel',
       link: function(scope, elm, attrs) {
         scope.$watch('answer', function (v) {
           if (scope.expectedAnswer == scope.answer) {
@@ -66,11 +77,6 @@ angular.module('bpEuler.directives', []).
             scope.validated = "";
             scope.answered = false;
           } 
-          scope.timer = moment.utc().diff(scope.startTime);
-        });
-
-        scope.$watch('inputNumber', function (v) {
-          scope.startTime = new moment().toDate();
         });
       }
     };
