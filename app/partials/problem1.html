@@ -1,5 +1,5 @@
 <div id="eulerCanvas">
-  <span class="bold font24">Euler Problem {{problem}}</span>
+  <span class="bold font24">Euler Problem: {{problem}}</span>
   <div>
     <div>
       <blockquote>
@@ -24,7 +24,7 @@
       </div>
       <div id="answer">When the input number is <bp-input-number></bp-input-number> then the answer is: <span ng-Bind="answer"></span></div>
     </div>
-    <div><span bp-problem-solved>Correct: </span><span ng-Class="{correct: answered, bold: answered}" ng-Bind="validated"></span></div>
+    <bp-problem-solved></bp-problem-solved>
     <div><span>Counter Effeciency: </span><span ng-Bind="counter"></span></div>
   </div>
 </div>

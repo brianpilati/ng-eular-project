@@ -3,7 +3,7 @@
 /* Controllers */
 angular.module('bpEuler.controllers', ['primeNumber', 'ngSanitize']).
   controller('bpMenu', ['$scope', function($scope) {
-    var totalPages = 9;
+    var totalPages = 10;
     $scope.pages = [];
     for (var pageNumber=1; pageNumber <= totalPages; pageNumber++) {
       $scope.pages.push(
@@ -31,7 +31,8 @@ angular.module('bpEuler.controllers', ['primeNumber', 'ngSanitize']).
     $scope.challenge = "Find the sum of all the multiples of 3 or 5 below 1000.";
     $scope.inputNumber = 10;
     $scope.calculateAnswer();
-    $scope.expectedAnswer = 233168;
+    $scope.expectedAnswer = 23;
+    $scope.eulerAnswer = 233168;
   }])
   .controller('bpProblem2', ['$scope', function($scope) {
 
@@ -70,9 +71,10 @@ angular.module('bpEuler.controllers', ['primeNumber', 'ngSanitize']).
       "1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ..."
     ];
     $scope.challenge = "By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.";
-    $scope.inputNumber = 10;
+    $scope.inputNumber = 100;
     $scope.calculateAnswer();
-    $scope.expectedAnswer = 4613732;
+    $scope.eulerAnswer = 4613732;
+    $scope.expectedAnswer = 44;
   }])
   .controller('bpProblem3', ['$scope', 'primeNumber', function($scope, primeNumber) {
     $scope._findBiggestPrimeFactor = function() {
@@ -133,7 +135,8 @@ angular.module('bpEuler.controllers', ['primeNumber', 'ngSanitize']).
     $scope.challenge = "What is the largest prime factor of the number 600851475143?";
     $scope.inputNumber = 13195;
     $scope.calculateAnswer();
-    $scope.expectedAnswer = 6857;
+    $scope.expectedAnswer = 29;
+    $scope.eulerAnswer = 6857;
   }])
   .controller('bpProblem4', ['$scope', function($scope) {
 
@@ -353,6 +356,46 @@ angular.module('bpEuler.controllers', ['primeNumber', 'ngSanitize']).
     $scope.inputNumber = 12;
     $scope.calculateAnswer();
     $scope.expectedAnswer = 60;
+
+  }])
+
+  .controller('bpProblem10', ['$scope', 'primeNumber', function($scope, primeNumber) {
+    $scope.calculateAnswer = function () {
+      var counter = 0;
+      var sumOfPrimes = 0;
+      var shouldContinue = true;
+      var number = $scope.inputNumber + 1;
+      while(shouldContinue) {
+        primeNumber.isPrimeNumber(number);
+        var lastPrime = primeNumber._knownPrimes[primeNumber._knownPrimes.length-1];
+        if (lastPrime >= $scope.inputNumber) {
+          shouldContinue = false;
+        } else {
+          number = 4 * number + 1;
+          console.log(number);
+        }
+      }
+
+      var knownPrimes = primeNumber._knownPrimes;
+      for(var index = 0; index < knownPrimes.length; index++) {
+        var prime = knownPrimes[index];
+        if(prime != 1 && prime < $scope.inputNumber) {
+          sumOfPrimes += prime;
+        }
+      };
+
+      $scope.answer = sumOfPrimes;
+      $scope.counter = counter;
+    }
+
+    $scope.problem = "10";
+    $scope.explanation = [
+      "The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17."
+    ];
+    $scope.challenge = "Find the sum of all the primes below two million";
+    $scope.inputNumber = 10;
+    $scope.calculateAnswer();
+    $scope.expectedAnswer = undefined;
 
   }])
 

@@ -9,7 +9,8 @@ module.exports = function(config){
       'app/js/**/*.js',
       'test/unit/**/*.js',
       'app/lib/bpPrimeNumber/bp-prime-number-min.js',
-      'app/lib/momentJs/moment.min.js'
+      'app/lib/momentJs/moment.min.js',
+      'app/lib/underscore/underscore.js'
     ],
 
     exclude : [

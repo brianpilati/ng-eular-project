@@ -3,8 +3,11 @@
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
+  /*
   margin-bottom: 2em;
   padding: 0 0 0.5em;
+  */
+  background-color: grey;
 }
 
 .menu:before {
@@ -15,6 +18,7 @@
   content: "]";
 }
 
+/*
 .menu > li {
   display: inline;
 }
@@ -28,9 +32,62 @@
   content: "";
   padding: 0;
 }
+*/
+
+.menu > div > ul {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  /*
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+  */
+  border: 1px solid green;
+  height: 15px;
+  width: 100px;
+  background-color: green;
+}
+
+.menu > div > ul > li {
+  border-bottom: 0.1em solid black;
+  /*
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+  */
+  border: 1px solid orange;
+  background-color: orange;
+}
+
+.title {
+  width: 200px;
+}
+
+.menu > div {
+  display: inline;
+  float: left;
+  height: 15px;
+  border: 1px solid purple;
+  background-color: purple;
+}
+
+.menu > div:before {
+  content: "|";
+  padding-right: 0.3em;
+  float: left;
+}
+
+.menu > div:nth-child(1):before {
+  content: "";
+  padding: 0;
+  float: left;
+}
 
 .correct {
   color: green;
+}
+
+.checkMark {
+  width: 15px;
+  height: 15px;
 }
 
 #eulerCanvas {
@@ -70,10 +127,10 @@
 
 #inputNumber {
   position: absolute;
-  right: 10px;
+  left: 10px;
 }
 
 #answer {
   position: absolute;
-  left: 10px;
+  right: 10px;
 }

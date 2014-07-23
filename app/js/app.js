@@ -10,6 +10,7 @@ angular.module('bpEuler', [
   'bpEuler.directives',
   'bpEuler.controllers',
   'primeNumber',
+  'underscore'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/problem1', {templateUrl: 'partials/problem1.html', controller: 'bpProblem1'});

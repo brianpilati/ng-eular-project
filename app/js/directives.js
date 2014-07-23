@@ -14,7 +14,8 @@ angular.module('bpEuler.directives', []).
       restrict: 'EA',
       replace: true,
       transclude: true,
-      template: '<ul ng-transclude class="menu"></ul>',
+      //template: '<ul ng-transclude class="menu"></ul>',
+      template: '<div ng-transclude class="menu"></div>',
       controller: function() {
         var expanders = [];
 
@@ -39,10 +40,10 @@ angular.module('bpEuler.directives', []).
       transclude: true,
       require: '^?accordion',
       scope: { title:'=expanderTitle'},
-      template: '<li>' +
-        '<span class="title" ng-click="toggle()">{{title}}</span>' +
-        '<spanclass="body" ng-show="showMe" ng-transclude></span>' +
-        '</li>',
+      template: '<div><ul>' + 
+        '<li ng-click="toggle()"><div class="title">{{title}}</div></li>' +
+        '<li class="body" ng-show="showMe" ng-transclude></li>' +
+        '</ul></div>',
       link: function(scope, element, attrs, accordionController) {
         scope.showMe = false;
         accordionController.addExpander(scope);
@@ -68,14 +69,13 @@ angular.module('bpEuler.directives', []).
   })
   .directive('bpProblemSolved', function() {
     return {
+      restrict: "E",
+      template: "<div ng-Show='answered'><span ng-Class='{correct: answered, bold: answered}'>Correct: </span><img src='/img/checkMark.jpg' class='checkMark'></img></div>",
       link: function(scope, elm, attrs) {
         scope.$watch('answer', function (v) {
-          if (scope.expectedAnswer == scope.answer) {
+          if (scope.expectedAnswer == scope.answer || scope.eulerAnswer == scope.answer) {
             scope.validated = "Correct";
             scope.answered = true;
-          } else {
-            scope.validated = "";
-            scope.answered = false;
           } 
         });
       }
